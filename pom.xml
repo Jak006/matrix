@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.theotosoft</groupId>
-  <artifactId>linker</artifactId>
+  <groupId>com.immomo</groupId>
+  <artifactId>matrix</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-  <name>OTO :: Linker</name>
-  <description>The OTO Soft Distribution Solution - Service Linker.</description>
+  <name>MOMO Service Matrix</name>
+  <description>Service matrix cluster providing transparent service discovery and load balance.</description>
 
   <build>
     <plugins>
