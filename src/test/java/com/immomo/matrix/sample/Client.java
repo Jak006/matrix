@@ -12,8 +12,10 @@ public class Client {
 
     public static void main(String[] args) {
         HelloWorldService helloWorldService = (HelloWorldService) ServiceConsumerFactory.newInstance("A",
-                        "com.theotosoft.linker.sample.service.HelloWorldService");
-        helloWorldService.sayHello();
+                "com.immomo.matrix.sample.service.HelloWorldService");
+
+        String response = helloWorldService.sayHello();
+        System.out.println(response);
     }
 
 }

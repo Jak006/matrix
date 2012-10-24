@@ -1,10 +1,12 @@
-package com.immomo.matrix.server;
+package com.immomo.matrix.remoting.netty;
 
 import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
@@ -19,14 +21,16 @@ import com.immomo.matrix.util.MethodUtils;
  * @since 2012-10-19
  * 
  */
-public class LinkerServerHandler extends SimpleChannelHandler {
+public class MatrixServerHandler extends SimpleChannelHandler {
+    private static final Log LOG = LogFactory.getLog(MatrixServerHandler.class);
+
     private static ConcurrentMap<String, Method> methodCache = new ConcurrentHashMap<String, Method>();
     private static ConcurrentMap<String, Object> serviceInstances = new ConcurrentHashMap<String, Object>();
 
     static {
         try {
             Properties properties = new Properties();
-            properties.load(ClassLoaderUtils.getContextResource("linker_server.properties"));
+            properties.load(ClassLoaderUtils.getContextResource("matrix_server.properties"));
 
             for (Object key : properties.keySet()) {
                 String serviceName = (String) key;
@@ -45,6 +49,8 @@ public class LinkerServerHandler extends SimpleChannelHandler {
                     e.printStackTrace();
                 }
             }
+
+            LOG.info(serviceInstances.size() + " services published OK:\n" + serviceInstances.keySet());
         } catch (Exception e) {
             e.printStackTrace();
         }

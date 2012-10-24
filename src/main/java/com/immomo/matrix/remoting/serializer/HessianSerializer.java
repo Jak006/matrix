@@ -1,6 +1,6 @@
-package com.immomo.matrix.serializer;
+package com.immomo.matrix.remoting.serializer;
 
-import com.immomo.matrix.Serializer;
+import com.immomo.matrix.remoting.Serializer;
 
 /**
  * @author mixueqiang

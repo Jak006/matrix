@@ -1,11 +1,11 @@
-package com.immomo.matrix.serializer;
+package com.immomo.matrix.remoting.serializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import com.immomo.matrix.Serializer;
+import com.immomo.matrix.remoting.Serializer;
 
 /**
  * @author mixueqiang
@@ -24,9 +24,6 @@ public class JavaSerializer implements Serializer {
         } finally {
             if (oos != null) {
                 oos.close();
-            }
-            if (baos != null) {
-                baos.close();
             }
         }
     }

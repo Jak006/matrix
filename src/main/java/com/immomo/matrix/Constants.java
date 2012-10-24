@@ -7,6 +7,6 @@ package com.immomo.matrix;
  */
 public final class Constants {
 
-    public static final String COMPONENT_NAME = "LINKER";
+    public static final String SYSTEM_NAME = "MATRIX";
 
 }

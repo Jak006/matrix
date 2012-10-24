@@ -1,4 +1,4 @@
-package com.immomo.matrix;
+package com.immomo.matrix.remoting;
 
 import java.net.InetSocketAddress;
 
@@ -30,10 +30,12 @@ public class RemotingException extends Exception {
     }
 
     public RemotingException(Channel channel, String message, Throwable cause) {
-        this(channel == null ? null : channel.getLocalAddress(), channel == null ? null : channel.getRemoteAddress(), message, cause);
+        this(channel == null ? null : channel.getLocalAddress(), channel == null ? null : channel.getRemoteAddress(),
+                message, cause);
     }
 
-    public RemotingException(InetSocketAddress localAddress, InetSocketAddress remoteAddress, String message, Throwable cause) {
+    public RemotingException(InetSocketAddress localAddress, InetSocketAddress remoteAddress, String message,
+            Throwable cause) {
         super(message, cause);
 
         this.localAddress = localAddress;
