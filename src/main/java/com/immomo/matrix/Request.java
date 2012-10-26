@@ -18,7 +18,7 @@ public class Request implements Serializable {
     private String serviceName;
     private String methodName;
     private String[] methodArgSigs;
-    private transient Object[] methodArgs;
+    private Object[] methodArgs;
     private Map<String, Object> properties;
 
     public Object[] getMethodArgs() {
@@ -70,7 +70,8 @@ public class Request implements Serializable {
 
     @Override
     public String toString() {
-        return "Request [serviceName=" + serviceName + ", methodName=" + methodName + ", methodArgs=" + Arrays.toString(methodArgs) + "]";
+        return "Request [serviceName=" + serviceName + ", methodName=" + methodName + ", methodArgs="
+                + Arrays.toString(methodArgs) + "]";
     }
 
 }
