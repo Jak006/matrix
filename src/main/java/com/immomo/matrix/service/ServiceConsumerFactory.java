@@ -43,7 +43,7 @@ public class ServiceConsumerFactory {
         }
     }
 
-    public static Object newInstance(String applicationName, String serviceName) {
+    public static Object getInstance(String applicationName, String serviceName) {
         List<URL> urls = applicationURLs.get(applicationName);
         if (urls == null || urls.isEmpty()) {
             throw new NullPointerException("application urls is null!");

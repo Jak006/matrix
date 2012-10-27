@@ -8,10 +8,10 @@ import com.immomo.matrix.service.ServiceConsumerFactory;
  * @since 2012-10-20
  * 
  */
-public class Client {
+public class HelloWorldClient {
 
     public static void main(String[] args) {
-        HelloWorldService helloWorldService = (HelloWorldService) ServiceConsumerFactory.newInstance("A",
+        HelloWorldService helloWorldService = (HelloWorldService) ServiceConsumerFactory.getInstance("A",
                 "com.immomo.matrix.sample.service.HelloWorldService");
 
         String response = helloWorldService.sayHello();

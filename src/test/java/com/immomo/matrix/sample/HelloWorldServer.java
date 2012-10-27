@@ -8,7 +8,7 @@ import com.immomo.matrix.remoting.netty.NettyServer;
  * @since 2012-10-19
  * 
  */
-public class Bootstrap {
+public class HelloWorldServer {
 
     public static void main(String[] args) {
         MatrixServer server = new NettyServer();

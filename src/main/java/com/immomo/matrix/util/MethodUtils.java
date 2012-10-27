@@ -30,7 +30,6 @@ public class MethodUtils {
         for (String methodArgSig : methodArgSigs) {
             sb.append(methodArgSig);
         }
-
         return sb.toString();
     }
 
