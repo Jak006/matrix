@@ -45,16 +45,19 @@ public class ServiceProvider {
      * TODO: Timeout process.
      */
     public Response handleRequest(Request request) {
-        Response response = new Response();
+        final Response response = new Response();
+        final String methodName = request.getMethodName();
+        final String[] methodArgSigs = request.getMethodArgSigs();
 
-        String methodKey = MethodUtils.getMethodKey(request.getMethodName(), request.getMethodArgSigs());
+        String methodKey = MethodUtils.getMethodKey(methodName, methodArgSigs);
         Method method = methods.get(methodKey);
         if (method == null) {
-            response.setErrorAndMessage("NoSuchMethodException: " + request.getMethodName());
+            response.setErrorAndMessage("NoSuchMethodException: " + methodName);
         }
 
         try {
-            Object result = method.invoke(serviceInstance, request.getMethodArgs());
+            final Object[] methodArgs = request.getMethodArgs();
+            Object result = method.invoke(serviceInstance, methodArgs);
             response.setPayload(result);
 
         } catch (IllegalArgumentException e) {

@@ -2,7 +2,7 @@ package com.immomo.matrix.remoting.netty;
 
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
-import java.net.URL;
+import java.net.URI;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
@@ -39,13 +39,14 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     private ClientBootstrap bootstrap;
     private volatile Channel channel;
 
-    public NettyClient(final URL requestURL) {
-        super(requestURL);
+    public NettyClient(final URI requestURI) {
+        super(requestURI);
+
         bootstrap = new ClientBootstrap(channelFactory);
         bootstrap.setOption("keepAlive", true);
         bootstrap.setOption("tcpNoDelay", true);
 
-        final ChannelHandler clientHandler = new MatrixClientHandler(getRequestURL(), this);
+        final ChannelHandler clientHandler = new MatrixClientHandler(getRequestURI(), this);
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             @Override
             public ChannelPipeline getPipeline() {
@@ -70,6 +71,7 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     public Object invoke(String applicationName, String serviceName, Method method, Object[] args) {
         Request request = RequestBuilder.build(serviceName, method, args);
         ChannelFuture responseFuture = channel.write(request);
+
         while (!responseFuture.isDone()) {
             // TODO: Timeout and Exception
             try {

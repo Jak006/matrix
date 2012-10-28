@@ -10,7 +10,7 @@ import com.immomo.matrix.service.ServiceConsumerFactory;
  */
 public class HelloWorldClient {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         HelloWorldService helloWorldService = (HelloWorldService) ServiceConsumerFactory.getInstance("A",
                 "com.immomo.matrix.sample.service.HelloWorldService");
 

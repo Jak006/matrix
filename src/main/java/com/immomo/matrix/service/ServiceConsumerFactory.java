@@ -2,7 +2,7 @@ package com.immomo.matrix.service;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,7 @@ import com.immomo.matrix.util.ClassLoaderUtils;
  * 
  */
 public class ServiceConsumerFactory {
-    private static Map<String, List<URL>> applicationURLs = new HashMap<String, List<URL>>();
+    private static Map<String, List<URI>> serverURIs = new HashMap<String, List<URI>>();
 
     static {
         try {
@@ -30,11 +30,11 @@ public class ServiceConsumerFactory {
             for (String applicationName : applications) {
                 String[] urls = properties.getProperty(applicationName).split(",|;");
 
-                List<URL> list = new ArrayList<URL>();
+                List<URI> list = new ArrayList<URI>();
                 for (String url : urls) {
-                    list.add(new URL(url));
+                    list.add(new URI(url));
                 }
-                applicationURLs.put(applicationName, list);
+                serverURIs.put(applicationName, list);
             }
 
         } catch (Exception e) {
@@ -43,23 +43,21 @@ public class ServiceConsumerFactory {
         }
     }
 
-    public static Object getInstance(String applicationName, String serviceName) {
-        List<URL> urls = applicationURLs.get(applicationName);
-        if (urls == null || urls.isEmpty()) {
-            throw new NullPointerException("application urls is null!");
+    public static Object getInstance(String applicationName, String serviceName) throws ClassNotFoundException {
+        Class<?> serviceClass = Class.forName(serviceName);
+        return getInstance(applicationName, serviceClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getInstance(String applicationName, Class<T> serviceClass) {
+        List<URI> uris = serverURIs.get(applicationName);
+        if (uris == null || uris.isEmpty()) {
+            throw new NullPointerException("URL not found for application: " + applicationName);
         }
 
-        URL url = urls.get(RandomUtils.nextInt(urls.size()));
-        InvocationHandler handler = new ServiceConsumer(applicationName, serviceName, url);
-
-        Class<?> interfaceClass = null;
-        try {
-            interfaceClass = Class.forName(serviceName);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Class not found: " + serviceName);
-        }
-
-        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] { interfaceClass },
+        URI uri = uris.get(RandomUtils.nextInt(uris.size()));
+        InvocationHandler handler = new ServiceConsumer(applicationName, serviceClass.getName(), uri);
+        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] { serviceClass },
                 handler);
     }
 

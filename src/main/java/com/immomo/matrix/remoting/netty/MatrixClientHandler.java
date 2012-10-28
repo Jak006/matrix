@@ -1,6 +1,6 @@
 package com.immomo.matrix.remoting.netty;
 
-import java.net.URL;
+import java.net.URI;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,7 +24,7 @@ public class MatrixClientHandler extends SimpleChannelHandler {
 
     private final MatrixClient client;
 
-    public MatrixClientHandler(URL url, MatrixClient client) {
+    public MatrixClientHandler(URI uri, MatrixClient client) {
         if (client == null) {
             throw new NullPointerException("client");
         }

@@ -11,7 +11,7 @@ import java.util.Map;
  * 
  */
 public class Request implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 0L;
     public static final String KEY_VERSION = "_version";
     public static final String KEY_GROUP = "_group";
 

@@ -1,9 +1,9 @@
 package com.immomo.matrix.remoting;
 
-import java.net.URL;
+import java.net.URI;
 
 import com.immomo.matrix.Response;
-import com.immomo.matrix.util.URLUtils;
+import com.immomo.matrix.util.URIUtils;
 
 /**
  * @author mixueqiang
@@ -13,26 +13,26 @@ import com.immomo.matrix.util.URLUtils;
 public abstract class AbstractMatrixClient implements MatrixClient {
 
     protected MatrixChannelStatus status;
-    protected URL requetsURL;
+    protected URI requestURI;
     protected int timeout;
     protected Response response;
 
-    public AbstractMatrixClient(URL requestURL) {
-        this.requetsURL = requestURL;
-        this.timeout = URLUtils.getIntParameter(requestURL, "timeout", 1000);
+    public AbstractMatrixClient(URI requestURI) {
+        this.requestURI = requestURI;
+        this.timeout = URIUtils.getIntParameter(requestURI, "timeout", 1000);
     }
 
     public String getHost() {
-        return requetsURL.getHost();
+        return requestURI.getHost();
     }
 
     public int getPort() {
-        return requetsURL.getPort();
+        return requestURI.getPort();
     }
 
     @Override
-    public URL getRequestURL() {
-        return requetsURL;
+    public URI getRequestURI() {
+        return requestURI;
     }
 
     @Override
@@ -51,7 +51,7 @@ public abstract class AbstractMatrixClient implements MatrixClient {
 
     @Override
     public String toString() {
-        return "AbstractMatrixClient [requestUrl=" + requetsURL + ", status=" + status + "]";
+        return "AbstractMatrixClient [requestURI=" + requestURI + ", status=" + status + "]";
     }
 
 }

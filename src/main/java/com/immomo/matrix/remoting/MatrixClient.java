@@ -1,7 +1,7 @@
 package com.immomo.matrix.remoting;
 
 import java.lang.reflect.Method;
-import java.net.URL;
+import java.net.URI;
 
 import com.immomo.matrix.Response;
 
@@ -15,7 +15,7 @@ public interface MatrixClient {
     /**
      * Get the URL requested.
      */
-    URL getRequestURL();
+    URI getRequestURI();
 
     /**
      * Get the timeout on this request.
