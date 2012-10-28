@@ -8,8 +8,8 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 
 import com.immomo.matrix.Request;
 import com.immomo.matrix.Response;
-import com.immomo.matrix.service.ServiceProvider;
-import com.immomo.matrix.service.ServiceProviderFactory;
+import com.immomo.matrix.ServiceProvider;
+import com.immomo.matrix.ServiceProviderFactory;
 
 /**
  * @author mixueqiang
@@ -19,11 +19,17 @@ import com.immomo.matrix.service.ServiceProviderFactory;
 public class MatrixServerHandler extends SimpleChannelHandler {
     private static final Log LOG = LogFactory.getLog(MatrixServerHandler.class);
 
+    private ServiceProviderFactory serviceProviderFactory;
+
+    public MatrixServerHandler(String propertyFile) {
+        serviceProviderFactory = new ServiceProviderFactory(propertyFile);
+    }
+
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         Request request = (Request) e.getMessage();
         String serviceName = request.getServiceName();
-        ServiceProvider serviceProvider = ServiceProviderFactory.getInstance(serviceName);
+        ServiceProvider serviceProvider = serviceProviderFactory.getInstance(serviceName);
 
         // Process the business logic.
         Response response = serviceProvider.handleRequest(request);

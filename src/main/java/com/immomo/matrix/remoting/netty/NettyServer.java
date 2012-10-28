@@ -33,7 +33,7 @@ public class NettyServer implements MatrixServer {
         bootstrap.setOption("child.tcpNoDelay", true);
         bootstrap.setOption("child.keepAlive", true);
 
-        final ChannelHandler serverHandler = new MatrixServerHandler();
+        final ChannelHandler serverHandler = new MatrixServerHandler("matrix_server.properties");
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 
             @Override

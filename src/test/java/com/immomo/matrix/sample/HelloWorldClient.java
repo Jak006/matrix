@@ -1,7 +1,7 @@
 package com.immomo.matrix.sample;
 
+import com.immomo.matrix.ServiceConsumerFactory;
 import com.immomo.matrix.sample.service.HelloWorldService;
-import com.immomo.matrix.service.ServiceConsumerFactory;
 
 /**
  * @author mixueqiang
@@ -10,11 +10,14 @@ import com.immomo.matrix.service.ServiceConsumerFactory;
  */
 public class HelloWorldClient {
 
-    public static void main(String[] args) throws Exception {
-        HelloWorldService helloWorldService = (HelloWorldService) ServiceConsumerFactory.getInstance("A",
-                "com.immomo.matrix.sample.service.HelloWorldService");
+    private static ServiceConsumerFactory serviceConsumerFactory = new ServiceConsumerFactory(
+            "matrix_client.properties");
 
-        String response = helloWorldService.sayHello();
+    public static void main(String[] args) throws Exception {
+        HelloWorldService helloWorldService = (HelloWorldService) serviceConsumerFactory.getInstance(
+                "HelloWorldApplication", "com.immomo.matrix.sample.service.HelloWorldService");
+
+        String response = helloWorldService.sayHello("mixueqiang");
         System.out.println(response);
     }
 

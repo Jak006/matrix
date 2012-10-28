@@ -1,4 +1,4 @@
-package com.immomo.matrix.service;
+package com.immomo.matrix;
 
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,12 +17,12 @@ import com.immomo.matrix.util.ClassLoaderUtils;
 public class ServiceProviderFactory {
     private static final Log LOG = LogFactory.getLog(ServiceProviderFactory.class);
 
-    private static ConcurrentMap<String, ServiceProvider> services = new ConcurrentHashMap<String, ServiceProvider>();
+    private ConcurrentMap<String, ServiceProvider> services = new ConcurrentHashMap<String, ServiceProvider>();
 
-    static {
+    public ServiceProviderFactory(String propertyFile) {
         try {
             Properties properties = new Properties();
-            properties.load(ClassLoaderUtils.getContextResource("matrix_server.properties"));
+            properties.load(ClassLoaderUtils.getContextResource(propertyFile));
 
             for (Object key : properties.keySet()) {
                 String serviceName = (String) key;
@@ -37,7 +37,7 @@ public class ServiceProviderFactory {
         }
     }
 
-    public static ServiceProvider getInstance(String serviceName) {
+    public ServiceProvider getInstance(String serviceName) {
         if (!services.containsKey(serviceName)) {
             // TODO: 异常处理
             return null;

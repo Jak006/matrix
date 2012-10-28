@@ -1,4 +1,4 @@
-package com.immomo.matrix.remoting;
+package com.immomo.matrix.exception;
 
 import java.net.InetSocketAddress;
 
@@ -9,7 +9,7 @@ import com.alibaba.dubbo.remoting.Channel;
  * @since 2012-10-20
  * 
  */
-public class RemotingException extends Exception {
+public class RemotingException extends MatrixException {
     private static final long serialVersionUID = -5632027511182622422L;
 
     private InetSocketAddress localAddress;

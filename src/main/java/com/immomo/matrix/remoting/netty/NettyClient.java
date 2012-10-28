@@ -2,7 +2,6 @@ package com.immomo.matrix.remoting.netty;
 
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
@@ -20,6 +19,7 @@ import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import com.alibaba.dubbo.common.utils.NamedThreadFactory;
 import com.immomo.matrix.Request;
+import com.immomo.matrix.exception.InvalidTargetURIException;
 import com.immomo.matrix.remoting.AbstractMatrixClient;
 import com.immomo.matrix.remoting.MatrixChannelStatus;
 import com.immomo.matrix.remoting.MatrixClient;
@@ -39,8 +39,8 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     private ClientBootstrap bootstrap;
     private volatile Channel channel;
 
-    public NettyClient(final URI requestURI) {
-        super(requestURI);
+    public NettyClient(final String targetURI) throws InvalidTargetURIException {
+        super(targetURI);
 
         bootstrap = new ClientBootstrap(channelFactory);
         bootstrap.setOption("keepAlive", true);

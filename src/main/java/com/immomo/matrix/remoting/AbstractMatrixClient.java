@@ -1,8 +1,10 @@
 package com.immomo.matrix.remoting;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import com.immomo.matrix.Response;
+import com.immomo.matrix.exception.InvalidTargetURIException;
 import com.immomo.matrix.util.URIUtils;
 
 /**
@@ -13,31 +15,35 @@ import com.immomo.matrix.util.URIUtils;
 public abstract class AbstractMatrixClient implements MatrixClient {
 
     protected MatrixChannelStatus status;
-    protected URI requestURI;
+    protected URI targetURI;
     protected int timeout;
     protected Response response;
 
-    public AbstractMatrixClient(URI requestURI) {
-        this.requestURI = requestURI;
-        this.timeout = URIUtils.getIntParameter(requestURI, "timeout", 1000);
+    public AbstractMatrixClient(String targetURI) throws InvalidTargetURIException {
+        try {
+            this.targetURI = new URI(targetURI);
+        } catch (URISyntaxException e) {
+            // The connection URI is invalid.
+            throw new InvalidTargetURIException(targetURI);
+        }
     }
 
     public String getHost() {
-        return requestURI.getHost();
+        return targetURI.getHost();
     }
 
     public int getPort() {
-        return requestURI.getPort();
+        return targetURI.getPort();
     }
 
     @Override
     public URI getRequestURI() {
-        return requestURI;
+        return targetURI;
     }
 
     @Override
     public int getTimeout() {
-        return timeout;
+        return URIUtils.getIntParameter(targetURI, "timeout", 1000);
     }
 
     public void setResponse(Response response) {
@@ -51,7 +57,7 @@ public abstract class AbstractMatrixClient implements MatrixClient {
 
     @Override
     public String toString() {
-        return "AbstractMatrixClient [requestURI=" + requestURI + ", status=" + status + "]";
+        return "AbstractMatrixClient [requestURI=" + targetURI + ", status=" + status + "]";
     }
 
 }

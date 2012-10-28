@@ -1,11 +1,10 @@
-package com.immomo.matrix.service;
+package com.immomo.matrix;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.net.URI;
 
 import com.immomo.matrix.remoting.MatrixClient;
-import com.immomo.matrix.remoting.netty.NettyClient;
+import com.immomo.matrix.remoting.MatrixClientFactory;
 
 /**
  * @author mixueqiang
@@ -16,9 +15,9 @@ public class ServiceConsumer implements InvocationHandler {
 
     private String applicationName;
     private String serviceName;
-    private URI requestURI;
+    private String requestURI;
 
-    public ServiceConsumer(String applicationName, String serviceName, URI requestURI) {
+    public ServiceConsumer(String applicationName, String serviceName, String requestURI) {
         this.applicationName = applicationName;
         this.serviceName = serviceName;
         this.requestURI = requestURI;
@@ -26,7 +25,7 @@ public class ServiceConsumer implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        MatrixClient client = new NettyClient(requestURI);
+        MatrixClient client = MatrixClientFactory.getInstance(requestURI);
         return client.invoke(applicationName, serviceName, method, args);
     }
 
