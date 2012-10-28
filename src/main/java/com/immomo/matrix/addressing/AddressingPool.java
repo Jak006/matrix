@@ -18,6 +18,8 @@ import com.immomo.matrix.util.ClassLoaderUtils;
  * {@link AddressingPool} stores all configured application addresses in this
  * application. You can specify a {@link LoadBalanceStrategy} for the service
  * addressing at runtime.
+ * <p>
+ * TODO: address black list and so on.
  * 
  * @author mixueqiang
  * @since 2012-10-28

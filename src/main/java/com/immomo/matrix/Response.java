@@ -10,10 +10,14 @@ import java.io.Serializable;
 public class Response implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private long id;
     private boolean isError = false;
     private String message;
-
     private Object payload;
+
+    public long getId() {
+        return id;
+    }
 
     public String getMessage() {
         return message;
@@ -36,6 +40,10 @@ public class Response implements Serializable {
         this.message = message;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }
@@ -46,7 +54,7 @@ public class Response implements Serializable {
 
     @Override
     public String toString() {
-        return "Response [isError=" + isError + ", message=" + message + ", payload=" + payload + "]";
+        return "Response [id=" + id + ", isError=" + isError + ", payload=" + payload + "]";
     }
 
 }

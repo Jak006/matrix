@@ -1,4 +1,4 @@
-package com.immomo.matrix.remoting;
+package com.immomo.matrix;
 
 /**
  * @author mixueqiang

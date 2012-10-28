@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author mixueqiang
@@ -12,14 +13,24 @@ import java.util.Map;
  */
 public class Request implements Serializable {
     private static final long serialVersionUID = 0L;
+    private static final AtomicLong REQUEST_ID = new AtomicLong(0);
     public static final String KEY_VERSION = "_version";
     public static final String KEY_GROUP = "_group";
 
+    private long id;
     private String serviceName;
     private String methodName;
     private String[] methodArgSigs;
     private Object[] methodArgs;
     private Map<String, Object> properties;
+
+    public Request() {
+        this.id = REQUEST_ID.getAndIncrement();
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public Object[] getMethodArgs() {
         return methodArgs;
@@ -38,6 +49,14 @@ public class Request implements Serializable {
             properties = new HashMap<String, Object>();
         }
         return properties;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setMethodArgs(Object[] methodArgs) {
@@ -60,18 +79,14 @@ public class Request implements Serializable {
         getProperties().put(key, value);
     }
 
-    public String getServiceName() {
-        return serviceName;
-    }
-
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
 
     @Override
     public String toString() {
-        return "Request [serviceName=" + serviceName + ", methodName=" + methodName + ", methodArgs="
-                + Arrays.toString(methodArgs) + "]";
+        return "Request [id=" + id + ", serviceName=" + serviceName + ", methodName=" + methodName + ", methodArgSigs="
+                + Arrays.toString(methodArgSigs) + "]";
     }
 
 }
