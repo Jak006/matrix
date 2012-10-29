@@ -33,8 +33,8 @@ public interface MatrixClient {
     void setStatus(MatrixChannelStatus status);
 
     /**
-     * Close the connection on this client.
+     * Destroy the client.
      */
-    void close();
+    void destroy();
 
 }

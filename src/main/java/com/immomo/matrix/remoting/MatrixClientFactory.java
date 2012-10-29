@@ -12,7 +12,24 @@ import com.immomo.matrix.remoting.netty.NettyClient;
  * 
  */
 public class MatrixClientFactory {
-    private static final ConcurrentMap<String, MatrixClient> clients = new ConcurrentHashMap<String, MatrixClient>();
+
+    private static ConcurrentMap<String, MatrixClient> clients = new ConcurrentHashMap<String, MatrixClient>();
+
+    public static void destroy() {
+        for (String requestURI : clients.keySet()) {
+            MatrixClient matrixClient = clients.remove(requestURI);
+            if (matrixClient != null) {
+                matrixClient.destroy();
+            }
+        }
+    }
+
+    public static void destroy(String requestURI) {
+        MatrixClient matrixClient = clients.remove(requestURI);
+        if (matrixClient != null) {
+            matrixClient.destroy();
+        }
+    }
 
     public static MatrixClient getInstance(String requestURI) {
         if (clients.containsKey(requestURI)) {

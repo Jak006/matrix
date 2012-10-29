@@ -81,7 +81,7 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     }
 
     @Override
-    public void close() {
+    public void destroy() {
         channel.close();
     }
 

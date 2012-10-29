@@ -19,6 +19,9 @@ public class HelloWorldClient {
 
         String response = helloWorldService.sayHello("mixueqiang");
         System.out.println(response);
+
+        // Destroy all service instances in your application.
+        serviceConsumerFactory.destroy();
     }
 
 }
