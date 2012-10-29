@@ -2,8 +2,6 @@ package com.immomo.matrix.exception;
 
 import java.net.InetSocketAddress;
 
-import com.alibaba.dubbo.remoting.Channel;
-
 /**
  * @author mixueqiang
  * @since 2012-10-20
@@ -27,11 +25,6 @@ public class RemotingException extends MatrixException {
 
         this.localAddress = localAddress;
         this.remoteAddress = remoteAddress;
-    }
-
-    public RemotingException(Channel channel, String message, Throwable cause) {
-        this(channel == null ? null : channel.getLocalAddress(), channel == null ? null : channel.getRemoteAddress(),
-                message, cause);
     }
 
     public RemotingException(InetSocketAddress localAddress, InetSocketAddress remoteAddress, String message,

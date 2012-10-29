@@ -16,7 +16,6 @@ import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
-import com.alibaba.dubbo.common.utils.NamedThreadFactory;
 import com.immomo.matrix.Request;
 import com.immomo.matrix.Response;
 import com.immomo.matrix.ResponseFuture;
@@ -25,6 +24,7 @@ import com.immomo.matrix.exception.MatrixException;
 import com.immomo.matrix.remoting.AbstractMatrixClient;
 import com.immomo.matrix.remoting.MatrixChannelStatus;
 import com.immomo.matrix.remoting.MatrixClient;
+import com.immomo.matrix.util.NamedThreadFactory;
 import com.immomo.matrix.util.RequestBuilder;
 
 /**
