@@ -3,7 +3,6 @@ package com.immomo.matrix.remoting;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.immomo.matrix.Response;
 import com.immomo.matrix.exception.InvalidTargetURIException;
 import com.immomo.matrix.util.URIUtils;
 
@@ -17,7 +16,6 @@ public abstract class AbstractMatrixClient implements MatrixClient {
     protected MatrixChannelStatus status;
     protected URI targetURI;
     protected int timeout;
-    protected Response response;
 
     public AbstractMatrixClient(String targetURI) throws InvalidTargetURIException {
         try {
@@ -44,10 +42,6 @@ public abstract class AbstractMatrixClient implements MatrixClient {
     @Override
     public int getTimeout() {
         return URIUtils.getIntParameter(targetURI, "timeout", 1000);
-    }
-
-    public void setResponse(Response response) {
-        this.response = response;
     }
 
     @Override

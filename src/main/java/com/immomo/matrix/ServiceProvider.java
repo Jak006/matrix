@@ -44,6 +44,8 @@ public class ServiceProvider {
      */
     public Response handleRequest(Request request) {
         final Response response = new Response();
+        response.setId(request.getId());
+
         final String methodName = request.getMethodName();
         final String[] methodArgSigs = request.getMethodArgSigs();
 

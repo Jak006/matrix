@@ -3,7 +3,7 @@ package com.immomo.matrix.remoting;
 import java.lang.reflect.Method;
 import java.net.URI;
 
-import com.immomo.matrix.Response;
+import com.immomo.matrix.exception.MatrixException;
 
 /**
  * @author mixueqiang
@@ -25,12 +25,7 @@ public interface MatrixClient {
     /**
      * Invoke service.
      */
-    Object invoke(String applicationName, String serviceName, Method method, Object[] args);
-
-    /**
-     * Set the response.
-     */
-    void setResponse(Response response);
+    Object invoke(String applicationName, String serviceName, Method method, Object[] args) throws MatrixException;
 
     /**
      * Set the status of the {@link MatrixClient}.

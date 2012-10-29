@@ -8,7 +8,6 @@ import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelHandler;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
@@ -19,7 +18,10 @@ import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import com.alibaba.dubbo.common.utils.NamedThreadFactory;
 import com.immomo.matrix.Request;
+import com.immomo.matrix.Response;
+import com.immomo.matrix.ResponseFuture;
 import com.immomo.matrix.exception.InvalidTargetURIException;
+import com.immomo.matrix.exception.MatrixException;
 import com.immomo.matrix.remoting.AbstractMatrixClient;
 import com.immomo.matrix.remoting.MatrixChannelStatus;
 import com.immomo.matrix.remoting.MatrixClient;
@@ -46,7 +48,6 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
         bootstrap.setOption("keepAlive", true);
         bootstrap.setOption("tcpNoDelay", true);
 
-        final ChannelHandler clientHandler = new MatrixClientHandler(getRequestURI(), this);
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             @Override
             public ChannelPipeline getPipeline() {
@@ -56,7 +57,7 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
                         "decode",
                         new ObjectDecoder(ClassResolvers.softCachingConcurrentResolver(Thread.currentThread()
                                 .getContextClassLoader())));
-                pipeline.addLast("handler", clientHandler);
+                pipeline.addLast("handler", new MatrixClientHandler());
                 return pipeline;
             }
         });
@@ -68,19 +69,14 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     }
 
     @Override
-    public Object invoke(String applicationName, String serviceName, Method method, Object[] args) {
+    public Object invoke(String applicationName, String serviceName, Method method, Object[] args)
+            throws MatrixException {
         Request request = RequestBuilder.build(serviceName, method, args);
-        ChannelFuture responseFuture = channel.write(request);
+        ResponseFuture responseFuture = new ResponseFuture(channel, request, getTimeout());
+        channel.write(request);
 
-        while (!responseFuture.isDone()) {
-            // TODO: Timeout and Exception
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
+        Response response = responseFuture.get();
+        // TODO: Analyze response.
         return response.getPayload();
     }
 
