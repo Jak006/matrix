@@ -1,7 +1,7 @@
-package com.immomo.matrix.sample;
+package com.immomo.matrix.sample.helloworld;
 
 import com.immomo.matrix.ServiceConsumerFactory;
-import com.immomo.matrix.sample.service.HelloWorldService;
+import com.immomo.matrix.sample.helloworld.service.HelloWorldService;
 
 /**
  * @author mixueqiang
@@ -15,10 +15,9 @@ public class HelloWorldClient {
 
     public static void main(String[] args) throws Exception {
         HelloWorldService helloWorldService = (HelloWorldService) serviceConsumerFactory.getInstance(
-                "HelloWorldApplication", "com.immomo.matrix.sample.service.HelloWorldService");
+                "HelloWorldApplication", "com.immomo.matrix.sample.helloworld.service.HelloWorldService");
 
-        String response = helloWorldService.sayHello("mixueqiang");
-        System.out.println(response);
+        System.out.println(helloWorldService.sayHello("mixueqiang"));
 
         // Destroy all service instances in your application.
         serviceConsumerFactory.destroy();

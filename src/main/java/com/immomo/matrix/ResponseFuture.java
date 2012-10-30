@@ -36,7 +36,7 @@ public class ResponseFuture {
 
     static {
         // Start the response timeout scanner.
-        timeoutScanner.scheduleWithFixedDelay(new TimeoutScanner(), 10, 30, TimeUnit.MILLISECONDS);
+        timeoutScanner.scheduleWithFixedDelay(new TimeoutScanner(), 10, 100, TimeUnit.MILLISECONDS);
     }
 
     public static void responseReceived(Channel channel, Response response) {
@@ -46,9 +46,6 @@ public class ResponseFuture {
             ResponseFuture future = futures.remove(id);
             if (future != null) {
                 future.setResponse(response);
-            } else {
-                LOG.warn("Timeout response received: " + response + ", channel: [" + channel.getLocalAddress()
-                        + " <-- " + channel.getRemoteAddress() + "].");
             }
 
         } finally {
@@ -159,9 +156,11 @@ public class ResponseFuture {
                     }
 
                     if (System.currentTimeMillis() - future.getStartTime() > future.getTimeout()) {
-                        Response timeoutResponse = new Response();
                         // TODO: Add more info.
+                        Response timeoutResponse = new Response();
                         timeoutResponse.setErrorAndMessage("TimeoutException");
+                        LOG.error("Response Timeout: channel: [" + future.getChannel().getLocalAddress() + " <-- "
+                                + future.getChannel().getRemoteAddress() + "].");
 
                         ResponseFuture.responseReceived(future.getChannel(), timeoutResponse);
                     }

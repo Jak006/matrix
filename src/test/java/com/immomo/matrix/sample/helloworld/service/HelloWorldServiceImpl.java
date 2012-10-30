@@ -1,4 +1,4 @@
-package com.immomo.matrix.sample.service;
+package com.immomo.matrix.sample.helloworld.service;
 
 /**
  * @author mixueqiang
