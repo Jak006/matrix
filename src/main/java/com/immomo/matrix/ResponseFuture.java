@@ -30,7 +30,7 @@ public class ResponseFuture {
     private static final Log LOG = LogFactory.getLog(ResponseFuture.class);
 
     private static final Map<Long, Channel> channels = new ConcurrentHashMap<Long, Channel>();
-    private static final Map<Long, ResponseFuture> responseFutures = new ConcurrentHashMap<Long, ResponseFuture>();
+    private static final Map<Long, ResponseFuture> futures = new ConcurrentHashMap<Long, ResponseFuture>();
     private static final ScheduledExecutorService timeoutScanner = Executors
             .newSingleThreadScheduledExecutor(new NamedThreadFactory("ResponseTimeoutScanner", true));
 
@@ -43,12 +43,12 @@ public class ResponseFuture {
         long id = response.getId();
 
         try {
-            ResponseFuture future = responseFutures.remove(id);
+            ResponseFuture future = futures.remove(id);
             if (future != null) {
                 future.setResponse(response);
             } else {
-                LOG.warn("Timeout response received: " + response + //
-                        ", channel: [" + channel.getLocalAddress() + " <-- " + channel.getRemoteAddress() + "].");
+                LOG.warn("Timeout response received: " + response + ", channel: [" + channel.getLocalAddress()
+                        + " <-- " + channel.getRemoteAddress() + "].");
             }
 
         } finally {
@@ -71,7 +71,7 @@ public class ResponseFuture {
         this.timeout = timeout;
 
         channels.put(request.getId(), channel);
-        responseFutures.put(request.getId(), this);
+        futures.put(request.getId(), this);
     }
 
     /**
@@ -153,7 +153,7 @@ public class ResponseFuture {
         @Override
         public void run() {
             try {
-                for (ResponseFuture future : responseFutures.values()) {
+                for (ResponseFuture future : futures.values()) {
                     if (future == null || future.isDone()) {
                         continue;
                     }
