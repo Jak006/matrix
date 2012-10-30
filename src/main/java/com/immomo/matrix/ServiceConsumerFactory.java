@@ -74,6 +74,11 @@ public class ServiceConsumerFactory {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            // Avoid remote invocation for toString method in debug mode.
+            if ("toString".equals(method.getName())) {
+                return proxy.getClass().getName();
+            }
+
             // Service addressing here.
             String requestURI = addressingPool.getAddress(applicationName, serviceName);
 
