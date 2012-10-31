@@ -103,9 +103,12 @@ public class ResponseFuture {
         }
 
         if (!isDone()) {
-            throw new TimeoutException(request, System.currentTimeMillis() - startTime);
+            LOG.error("Time out exception. Time elapsed: " + (System.currentTimeMillis() - startTime) + "ms. Request: "
+                    + request);
+            return null;
         }
 
+        LOG.debug("Time elapsed: " + (System.currentTimeMillis() - startTime) + "ms.");
         return response;
     }
 

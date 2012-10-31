@@ -11,6 +11,15 @@ import org.apache.commons.lang.StringUtils;
  */
 public class URIUtils {
 
+    public static boolean getBooleanParameter(URI uri, String parameterName, boolean defaultValue) {
+        String strValue = getParameter(uri, parameterName, null);
+        if (strValue != null) {
+            return Boolean.parseBoolean(strValue);
+        }
+
+        return defaultValue;
+    }
+
     public static int getIntParameter(URI uri, String parameterName, int defaultValue) {
         String strValue = getParameter(uri, parameterName, null);
         if (strValue != null) {

@@ -8,13 +8,7 @@ import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
-import org.jboss.netty.handler.codec.serialization.ClassResolvers;
-import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
-import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import com.immomo.matrix.Request;
 import com.immomo.matrix.Response;
@@ -41,31 +35,28 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     private ClientBootstrap bootstrap;
     private volatile Channel channel;
 
-    public NettyClient(final String targetURI) throws InvalidTargetURIException {
+    public NettyClient(String targetURI) throws InvalidTargetURIException {
         super(targetURI);
 
         bootstrap = new ClientBootstrap(channelFactory);
         bootstrap.setOption("keepAlive", true);
         bootstrap.setOption("tcpNoDelay", true);
 
-        bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-            @Override
-            public ChannelPipeline getPipeline() {
-                ChannelPipeline pipeline = Channels.pipeline();
-                pipeline.addLast("encode", new ObjectEncoder());
-                pipeline.addLast(
-                        "decode",
-                        new ObjectDecoder(ClassResolvers.softCachingConcurrentResolver(Thread.currentThread()
-                                .getContextClassLoader())));
-                pipeline.addLast("handler", new MatrixClientHandler());
-                return pipeline;
-            }
-        });
+        if (isSsl()) {
+            bootstrap.setPipelineFactory(new MatrixSSLClientPipelineFactory());
+        } else {
+            bootstrap.setPipelineFactory(new MatrixClientPipelineFactory());
+        }
 
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(getHost(), getPort()));
         channel = future.getChannel();
 
         setStatus(MatrixChannelStatus.CONNECTED);
+    }
+
+    @Override
+    public void destroy() {
+        channel.close();
     }
 
     @Override
@@ -78,11 +69,6 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
         Response response = responseFuture.get();
         // TODO: Analyze response.
         return response.getPayload();
-    }
-
-    @Override
-    public void destroy() {
-        channel.close();
     }
 
 }

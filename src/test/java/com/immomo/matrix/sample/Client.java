@@ -23,7 +23,7 @@ public class Client {
                 "CalculatorApplication", "com.immomo.matrix.sample.calculator.service.CalculatorService");
         System.out.println(calculatorService.add(10, 10000));
 
-        Thread.sleep(1000);
+        Thread.sleep(10000);
 
         // Destroy all service instances in your application.
         serviceConsumerFactory.destroy();

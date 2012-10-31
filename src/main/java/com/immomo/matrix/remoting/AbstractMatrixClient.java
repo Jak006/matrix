@@ -15,7 +15,6 @@ public abstract class AbstractMatrixClient implements MatrixClient {
 
     protected MatrixChannelStatus status;
     protected URI targetURI;
-    protected int timeout;
 
     public AbstractMatrixClient(String targetURI) throws InvalidTargetURIException {
         try {
@@ -42,6 +41,10 @@ public abstract class AbstractMatrixClient implements MatrixClient {
     @Override
     public int getTimeout() {
         return URIUtils.getIntParameter(targetURI, "timeout", 1000);
+    }
+
+    public boolean isSsl() {
+        return URIUtils.getBooleanParameter(targetURI, "ssl", false);
     }
 
     @Override

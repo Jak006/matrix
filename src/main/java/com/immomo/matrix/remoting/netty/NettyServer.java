@@ -6,14 +6,7 @@ import java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.ChannelHandler;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-import org.jboss.netty.handler.codec.serialization.ClassResolvers;
-import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
-import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import com.immomo.matrix.remoting.MatrixServer;
 
@@ -24,7 +17,21 @@ import com.immomo.matrix.remoting.MatrixServer;
  */
 public class NettyServer implements MatrixServer {
     private static final Log LOG = LogFactory.getLog(NettyServer.class);
-    private static int port = 10010;
+    private int port = 10010;
+    private boolean useSSL = false;
+
+    public NettyServer() {
+        this(10010, false);
+    }
+
+    public NettyServer(boolean useSSL) {
+        this(10010, useSSL);
+    }
+
+    public NettyServer(int port, boolean useSSL) {
+        this.port = port;
+        this.useSSL = useSSL;
+    }
 
     @Override
     public void start() {
@@ -33,22 +40,11 @@ public class NettyServer implements MatrixServer {
         bootstrap.setOption("child.tcpNoDelay", true);
         bootstrap.setOption("child.keepAlive", true);
 
-        final ChannelHandler serverHandler = new MatrixServerHandler("matrix_server.properties");
-        bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-
-            @Override
-            public ChannelPipeline getPipeline() throws Exception {
-                ChannelPipeline pipeline = Channels.pipeline();
-                pipeline.addLast("encode", new ObjectEncoder());
-                pipeline.addLast(
-                        "decode",
-                        new ObjectDecoder(ClassResolvers.softCachingConcurrentResolver(Thread.currentThread()
-                                .getContextClassLoader())));
-                pipeline.addLast("handler", serverHandler);
-
-                return pipeline;
-            }
-        });
+        if (useSSL) {
+            bootstrap.setPipelineFactory(new MatrixSSLServerPipelineFactory());
+        } else {
+            bootstrap.setPipelineFactory(new MatrixServerPipelineFactory());
+        }
 
         bootstrap.bind(new InetSocketAddress(port));
         LOG.info("Matrix Server started at " + port + ".");
