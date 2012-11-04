@@ -43,10 +43,6 @@ public abstract class AbstractMatrixClient implements MatrixClient {
         return URIUtils.getIntParameter(targetURI, "timeout", 1000);
     }
 
-    public boolean isSsl() {
-        return URIUtils.getBooleanParameter(targetURI, "ssl", false);
-    }
-
     @Override
     public void setStatus(MatrixChannelStatus status) {
         this.status = status;

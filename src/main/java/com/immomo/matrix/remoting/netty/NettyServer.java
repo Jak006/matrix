@@ -18,19 +18,13 @@ import com.immomo.matrix.remoting.MatrixServer;
 public class NettyServer implements MatrixServer {
     private static final Log LOG = LogFactory.getLog(NettyServer.class);
     private int port = 10010;
-    private boolean useSSL = false;
 
     public NettyServer() {
-        this(10010, false);
+        this(10010);
     }
 
-    public NettyServer(boolean useSSL) {
-        this(10010, useSSL);
-    }
-
-    public NettyServer(int port, boolean useSSL) {
+    public NettyServer(int port) {
         this.port = port;
-        this.useSSL = useSSL;
     }
 
     @Override
@@ -39,12 +33,7 @@ public class NettyServer implements MatrixServer {
                 Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
         bootstrap.setOption("child.tcpNoDelay", true);
         bootstrap.setOption("child.keepAlive", true);
-
-        if (useSSL) {
-            bootstrap.setPipelineFactory(new MatrixSSLServerPipelineFactory());
-        } else {
-            bootstrap.setPipelineFactory(new MatrixServerPipelineFactory());
-        }
+        bootstrap.setPipelineFactory(new MatrixServerPipelineFactory());
 
         bootstrap.bind(new InetSocketAddress(port));
         LOG.info("Matrix Server started at " + port + ".");
