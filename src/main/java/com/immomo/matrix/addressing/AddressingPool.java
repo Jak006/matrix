@@ -9,8 +9,8 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.immomo.matrix.LoadBalanceStrategy;
 import com.immomo.matrix.exception.URINotFoundException;
+import com.immomo.matrix.loadbalance.LoadBalanceStrategy;
 import com.immomo.matrix.service.ServiceInstance;
 import com.immomo.matrix.util.ClassLoaderUtils;
 

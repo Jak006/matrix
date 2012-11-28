@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.jboss.netty.channel.Channel;
 
 import com.immomo.matrix.exception.TimeoutException;
+import com.immomo.matrix.util.ErrorResponseUtils;
 import com.immomo.matrix.util.NamedThreadFactory;
 
 /**
@@ -116,6 +117,10 @@ public class ResponseFuture {
         return channel;
     }
 
+    public long getId() {
+        return request.getId();
+    }
+
     public long getStartTime() {
         return startTime;
     }
@@ -160,12 +165,12 @@ public class ResponseFuture {
 
                     if (System.currentTimeMillis() - future.getStartTime() > future.getTimeout()) {
                         // TODO: Add more info.
-                        Response timeoutResponse = new Response();
-                        timeoutResponse.setErrorAndMessage("TimeoutException");
+                        Response response = ErrorResponseUtils.buildTimeoutResponse(future.getId(), "TimeoutException");
+
                         LOG.error("Response Timeout: channel: [" + future.getChannel().getLocalAddress() + " <-- "
                                 + future.getChannel().getRemoteAddress() + "].");
 
-                        ResponseFuture.responseReceived(future.getChannel(), timeoutResponse);
+                        ResponseFuture.responseReceived(future.getChannel(), response);
                     }
                 }
 

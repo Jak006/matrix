@@ -1,4 +1,4 @@
-package com.immomo.matrix;
+package com.immomo.matrix.loadbalance;
 
 import java.util.List;
 

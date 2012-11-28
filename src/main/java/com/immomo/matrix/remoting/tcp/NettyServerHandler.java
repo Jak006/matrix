@@ -11,6 +11,7 @@ import com.immomo.matrix.Response;
 import com.immomo.matrix.service.PropertyBasedServiceProviderFactory;
 import com.immomo.matrix.service.ServiceInstance;
 import com.immomo.matrix.service.ServiceProviderFactory;
+import com.immomo.matrix.util.ErrorResponseUtils;
 
 /**
  * @author mixueqiang
@@ -32,9 +33,7 @@ public class NettyServerHandler extends SimpleChannelHandler {
         String serviceName = request.getServiceName();
         ServiceInstance serviceInstance = serviceProviderFactory.getInstance(serviceName);
         if (serviceInstance == null) {
-            Response response = new Response();
-            response.setErrorAndMessage("NoSuchServiceException: " + serviceName);
-
+            Response response = ErrorResponseUtils.buildServiceNotFoundResponse(request.getId(), serviceName);
             ctx.getChannel().write(response);
             return;
         }

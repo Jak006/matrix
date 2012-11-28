@@ -52,7 +52,7 @@ public abstract class ServiceProviderFactory {
             serviceInstances = new HashMap<String, ServiceInstance>();
         }
         serviceInstances.put(serviceName, serviceInstance);
-        dataStoreService.put(COMPONENT_NAME, Constants.KEY_STORE_SERVICES, serviceInstance);
+        dataStoreService.put(COMPONENT_NAME, Constants.KEY_STORE_SERVICES, serviceInstances);
     }
 
     /**

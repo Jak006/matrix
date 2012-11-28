@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.commons.lang.math.RandomUtils;
 
-import com.immomo.matrix.LoadBalanceStrategy;
 
 /**
  * @author mixueqiang

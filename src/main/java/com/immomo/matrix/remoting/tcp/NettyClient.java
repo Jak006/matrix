@@ -50,20 +50,27 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     }
 
     @Override
-    public void destroy() {
-        channel.close();
+    public Object invoke(String serviceName, Method method, Object[] args) throws MatrixException {
+        ResponseFuture responseFuture = invokeAsyn(serviceName, method, args);
+        Response response = responseFuture.get();
+
+        if (response.isError()) {
+
+        }
+        return response.getPayload();
     }
 
     @Override
-    public Object invoke(String applicationName, String serviceName, Method method, Object[] args)
-            throws MatrixException {
+    public ResponseFuture invokeAsyn(String serviceName, Method method, Object[] args) throws MatrixException {
         Request request = RequestBuilder.build(serviceName, method, args);
         ResponseFuture responseFuture = new ResponseFuture(channel, request, getTimeout());
         channel.write(request);
 
-        Response response = responseFuture.get();
-        // TODO: Analyze response.
-        return response.getPayload();
+        return responseFuture;
     }
 
+    @Override
+    public void destroy() {
+        channel.close();
+    }
 }

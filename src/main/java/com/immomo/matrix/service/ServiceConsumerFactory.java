@@ -6,10 +6,10 @@ import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.immomo.matrix.LoadBalanceStrategy;
 import com.immomo.matrix.addressing.AddressingPool;
 import com.immomo.matrix.addressing.AddressingService;
 import com.immomo.matrix.exception.URINotFoundException;
+import com.immomo.matrix.loadbalance.LoadBalanceStrategy;
 import com.immomo.matrix.loadbalance.RandomStrategy;
 import com.immomo.matrix.remoting.MatrixClient;
 import com.immomo.matrix.remoting.MatrixClientFactory;
@@ -84,7 +84,7 @@ public class ServiceConsumerFactory {
             String requestURI = addressingPool.getAddress(applicationName, serviceName);
 
             MatrixClient client = MatrixClientFactory.getInstance(requestURI);
-            return client.invoke(applicationName, serviceName, method, args);
+            return client.invoke(serviceName, method, args);
         }
     }
 
