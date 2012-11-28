@@ -14,6 +14,8 @@ import com.immomo.matrix.util.ErrorResponseUtils;
 import com.immomo.matrix.util.MethodUtils;
 
 /**
+ * 服务实例：维护了业务服务的服务实例。所有的服务请求都最终交由这里处理。
+ * 
  * @author mixueqiang
  * @since 2012-10-18
  * 

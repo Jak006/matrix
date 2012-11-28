@@ -17,12 +17,6 @@ import com.immomo.matrix.datastore.ThreadNotSafeDataStoreComponent;
 public abstract class ServiceProviderFactory {
     public static final String COMPONENT_NAME = "SERVICE_PROVIDER_FACTORY";
 
-    /**
-     * <ul>
-     * <li>&lt;MATRIX_SERVER, METADATAS&lt;ServiceUniqueName, Metadata&gt;&gt;
-     * <li>&lt;MATRIX_SERVER, WORKERS&lt;ServiceUniqueName, Worker&gt;&gt;
-     * </ul>
-     */
     public static DataStoreService dataStoreService = new ThreadNotSafeDataStoreComponent();
 
     /**
