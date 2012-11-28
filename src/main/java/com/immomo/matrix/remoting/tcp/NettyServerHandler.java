@@ -8,7 +8,8 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 
 import com.immomo.matrix.Request;
 import com.immomo.matrix.Response;
-import com.immomo.matrix.service.ServiceProvider;
+import com.immomo.matrix.service.PropertyBasedServiceProviderFactory;
+import com.immomo.matrix.service.ServiceInstance;
 import com.immomo.matrix.service.ServiceProviderFactory;
 
 /**
@@ -22,17 +23,24 @@ public class NettyServerHandler extends SimpleChannelHandler {
     private ServiceProviderFactory serviceProviderFactory;
 
     public NettyServerHandler(String propertyFile) {
-        serviceProviderFactory = new ServiceProviderFactory(propertyFile);
+        serviceProviderFactory = new PropertyBasedServiceProviderFactory(propertyFile);
     }
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         Request request = (Request) e.getMessage();
         String serviceName = request.getServiceName();
-        ServiceProvider serviceProvider = serviceProviderFactory.getInstance(serviceName);
+        ServiceInstance serviceInstance = serviceProviderFactory.getInstance(serviceName);
+        if (serviceInstance == null) {
+            Response response = new Response();
+            response.setErrorAndMessage("NoSuchServiceException: " + serviceName);
 
-        // Process the business logic.
-        Response response = serviceProvider.handleRequest(request);
+            ctx.getChannel().write(response);
+            return;
+        }
+
+        // Process business logic.
+        Response response = serviceInstance.handleRequest(request);
         LOG.debug("Request: " + request + ", response: " + response);
         ctx.getChannel().write(response);
     }

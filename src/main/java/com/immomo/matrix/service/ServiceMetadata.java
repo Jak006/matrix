@@ -12,11 +12,12 @@ import java.util.Properties;
  * @since Nov 28, 2012
  * 
  */
-public class Metadata implements Serializable {
+public class ServiceMetadata implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String DEFAULT_GROUP = "MATRIX";
 
     private String name;
+
     private String serviceName;
     private String group;
     private Properties properties = new Properties();
@@ -24,7 +25,7 @@ public class Metadata implements Serializable {
     private Map<String, Properties> exporters = new HashMap<String, Properties>();
     private Map<String, Properties> importers = new HashMap<String, Properties>();
 
-    public Metadata() {
+    public ServiceMetadata() {
         this.group = DEFAULT_GROUP;
     }
 

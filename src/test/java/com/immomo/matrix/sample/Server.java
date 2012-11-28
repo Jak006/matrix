@@ -12,7 +12,7 @@ public class Server {
 
     public static void main(String[] args) {
         MatrixServer server = new NettyServer();
-        server.start();
+        server.startServer();
     }
 
 }

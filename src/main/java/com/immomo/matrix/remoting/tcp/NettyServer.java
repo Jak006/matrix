@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import com.immomo.matrix.remoting.MatrixServer;
@@ -18,6 +19,7 @@ import com.immomo.matrix.remoting.MatrixServer;
 public class NettyServer implements MatrixServer {
     private static final Log LOG = LogFactory.getLog(NettyServer.class);
     private int port = 10010;
+    private ServerBootstrap bootstrap;
 
     public NettyServer() {
         this(10010);
@@ -28,9 +30,10 @@ public class NettyServer implements MatrixServer {
     }
 
     @Override
-    public void start() {
-        ServerBootstrap bootstrap = new ServerBootstrap(new NioServerSocketChannelFactory(
-                Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
+    public void startServer() {
+        ChannelFactory channelFacotry = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(),
+                Executors.newCachedThreadPool());
+        ServerBootstrap bootstrap = new ServerBootstrap(channelFacotry);
         bootstrap.setOption("child.tcpNoDelay", true);
         bootstrap.setOption("child.keepAlive", true);
         bootstrap.setPipelineFactory(new NettyServerPipelineFactory());
@@ -40,8 +43,8 @@ public class NettyServer implements MatrixServer {
     }
 
     @Override
-    public void stop() {
-        // Do nothing.
+    public void stopServer() {
+        bootstrap.releaseExternalResources();
     }
 
 }

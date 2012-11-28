@@ -6,15 +6,16 @@ package com.immomo.matrix.remoting;
  * 
  */
 public interface MatrixServer {
+    public static final String COMPONENT_NAME = "MATRIX_SERVER";
 
     /**
      * Start the server.
      */
-    void start();
+    void startServer();
 
     /**
      * Stop the server.
      */
-    void stop();
+    void stopServer();
 
 }

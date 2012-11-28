@@ -17,13 +17,13 @@ import com.immomo.matrix.util.MethodUtils;
  * @since 2012-10-18
  * 
  */
-public class ServiceProvider {
-    private static final Log LOG = LogFactory.getLog(ServiceProvider.class);
+public class ServiceInstance {
+    private static final Log LOG = LogFactory.getLog(ServiceInstance.class);
 
     private Map<String, Method> methods = new HashMap<String, Method>();
     private Object serviceInstance;
 
-    public ServiceProvider(String serviceName, String serviceInstanceName) {
+    public ServiceInstance(String serviceName, String serviceInstanceName) {
         try {
             Class<?> clazz = Class.forName(serviceName);
             for (Method method : clazz.getMethods()) {
@@ -42,7 +42,7 @@ public class ServiceProvider {
     /**
      * Process the service request.
      * <p>
-     * TODO: Timeout process.
+     * TODO: Exception, timeout handling.
      */
     public Response handleRequest(Request request) {
         final Response response = new Response();
@@ -55,6 +55,7 @@ public class ServiceProvider {
         Method method = methods.get(methodKey);
         if (method == null) {
             response.setErrorAndMessage("NoSuchMethodException: " + methodName);
+            return response;
         }
 
         try {

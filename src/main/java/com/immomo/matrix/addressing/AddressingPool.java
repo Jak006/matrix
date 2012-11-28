@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.immomo.matrix.LoadBalanceStrategy;
 import com.immomo.matrix.exception.URINotFoundException;
-import com.immomo.matrix.service.ServiceProvider;
+import com.immomo.matrix.service.ServiceInstance;
 import com.immomo.matrix.util.ClassLoaderUtils;
 
 /**
@@ -26,7 +26,7 @@ import com.immomo.matrix.util.ClassLoaderUtils;
  * 
  */
 public class AddressingPool implements AddressingService {
-    private static final Log LOG = LogFactory.getLog(ServiceProvider.class);
+    private static final Log LOG = LogFactory.getLog(ServiceInstance.class);
 
     private Map<String, List<String>> serverURIs = new HashMap<String, List<String>>();
     private LoadBalanceStrategy loadBalanceStrategy;
