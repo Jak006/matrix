@@ -1,4 +1,4 @@
-package com.immomo.matrix.remoting.netty;
+package com.immomo.matrix.remoting.tcp;
 
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
@@ -41,7 +41,7 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
         bootstrap = new ClientBootstrap(channelFactory);
         bootstrap.setOption("keepAlive", true);
         bootstrap.setOption("tcpNoDelay", true);
-        bootstrap.setPipelineFactory(new MatrixClientPipelineFactory());
+        bootstrap.setPipelineFactory(new NettyClientPipelineFactory());
 
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(getHost(), getPort()));
         channel = future.getChannel();

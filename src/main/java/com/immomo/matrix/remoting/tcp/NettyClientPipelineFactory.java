@@ -1,4 +1,4 @@
-package com.immomo.matrix.remoting.netty;
+package com.immomo.matrix.remoting.tcp;
 
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -12,24 +12,16 @@ import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
  * @since 2012-10-31
  * 
  */
-public class MatrixServerPipelineFactory implements ChannelPipelineFactory {
-
-    private MatrixServerHandler serverHandler;
-
-    public MatrixServerPipelineFactory() {
-        serverHandler = new MatrixServerHandler("matrix_server.properties");
-    }
+public class NettyClientPipelineFactory implements ChannelPipelineFactory {
 
     @Override
-    public ChannelPipeline getPipeline() throws Exception {
+    public ChannelPipeline getPipeline() {
         ChannelPipeline pipeline = Channels.pipeline();
-
         pipeline.addLast("encode", new ObjectEncoder());
         pipeline.addLast("decode", new ObjectDecoder(ClassResolvers.softCachingConcurrentResolver( //
                 Thread.currentThread().getContextClassLoader() //
                 )));
-        pipeline.addLast("handler", serverHandler);
-
+        pipeline.addLast("handler", new NettyClientHandler());
         return pipeline;
     }
 

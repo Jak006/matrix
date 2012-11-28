@@ -1,4 +1,4 @@
-package com.immomo.matrix;
+package com.immomo.matrix.service;
 
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;

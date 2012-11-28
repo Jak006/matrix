@@ -1,4 +1,4 @@
-package com.immomo.matrix.remoting.netty;
+package com.immomo.matrix.remoting.tcp;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -33,7 +33,7 @@ public class NettyServer implements MatrixServer {
                 Executors.newCachedThreadPool(), Executors.newCachedThreadPool()));
         bootstrap.setOption("child.tcpNoDelay", true);
         bootstrap.setOption("child.keepAlive", true);
-        bootstrap.setPipelineFactory(new MatrixServerPipelineFactory());
+        bootstrap.setPipelineFactory(new NettyServerPipelineFactory());
 
         bootstrap.bind(new InetSocketAddress(port));
         LOG.info("Matrix Server started at " + port + ".");

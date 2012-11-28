@@ -1,4 +1,4 @@
-package com.immomo.matrix;
+package com.immomo.matrix.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.immomo.matrix.Request;
+import com.immomo.matrix.Response;
 import com.immomo.matrix.util.MethodUtils;
 
 /**

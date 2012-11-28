@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.immomo.matrix.exception.InvalidTargetURIException;
-import com.immomo.matrix.remoting.netty.NettyClient;
+import com.immomo.matrix.remoting.tcp.NettyClient;
 
 /**
  * @author mixueqiang

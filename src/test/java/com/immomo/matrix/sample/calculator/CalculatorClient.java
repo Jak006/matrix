@@ -1,7 +1,7 @@
 package com.immomo.matrix.sample.calculator;
 
-import com.immomo.matrix.ServiceConsumerFactory;
 import com.immomo.matrix.sample.calculator.service.CalculatorService;
+import com.immomo.matrix.service.ServiceConsumerFactory;
 
 /**
  * @author mixueqiang

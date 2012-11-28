@@ -1,4 +1,4 @@
-package com.immomo.matrix;
+package com.immomo.matrix.service;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -6,6 +6,7 @@ import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.immomo.matrix.LoadBalanceStrategy;
 import com.immomo.matrix.addressing.AddressingPool;
 import com.immomo.matrix.addressing.AddressingService;
 import com.immomo.matrix.exception.URINotFoundException;

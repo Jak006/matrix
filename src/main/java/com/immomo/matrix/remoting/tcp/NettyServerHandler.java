@@ -1,4 +1,4 @@
-package com.immomo.matrix.remoting.netty;
+package com.immomo.matrix.remoting.tcp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -8,20 +8,20 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 
 import com.immomo.matrix.Request;
 import com.immomo.matrix.Response;
-import com.immomo.matrix.ServiceProvider;
-import com.immomo.matrix.ServiceProviderFactory;
+import com.immomo.matrix.service.ServiceProvider;
+import com.immomo.matrix.service.ServiceProviderFactory;
 
 /**
  * @author mixueqiang
  * @since 2012-10-19
  * 
  */
-public class MatrixServerHandler extends SimpleChannelHandler {
-    private static final Log LOG = LogFactory.getLog(MatrixServerHandler.class);
+public class NettyServerHandler extends SimpleChannelHandler {
+    private static final Log LOG = LogFactory.getLog(NettyServerHandler.class);
 
     private ServiceProviderFactory serviceProviderFactory;
 
-    public MatrixServerHandler(String propertyFile) {
+    public NettyServerHandler(String propertyFile) {
         serviceProviderFactory = new ServiceProviderFactory(propertyFile);
     }
 

@@ -1,4 +1,4 @@
-package com.immomo.matrix.remoting.netty;
+package com.immomo.matrix.remoting.tcp;
 
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
@@ -12,7 +12,7 @@ import com.immomo.matrix.ResponseFuture;
  * @since 2012-10-19
  * 
  */
-public class MatrixClientHandler extends SimpleChannelHandler {
+public class NettyClientHandler extends SimpleChannelHandler {
 
     /**
      * Receive the {@link Response}, and set it into {@link ResponseFuture}.

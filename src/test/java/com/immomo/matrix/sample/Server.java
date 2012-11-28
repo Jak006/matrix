@@ -1,7 +1,7 @@
 package com.immomo.matrix.sample;
 
 import com.immomo.matrix.remoting.MatrixServer;
-import com.immomo.matrix.remoting.netty.NettyServer;
+import com.immomo.matrix.remoting.tcp.NettyServer;
 
 /**
  * @author mixueqiang

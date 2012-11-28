@@ -52,4 +52,12 @@ public class URIUtils {
         return defaultValue;
     }
 
+    public static String getHost(URI uri) {
+        return uri.getHost();
+    }
+
+    public static int getPort(URI uri) {
+        return uri.getPort();
+    }
+
 }
