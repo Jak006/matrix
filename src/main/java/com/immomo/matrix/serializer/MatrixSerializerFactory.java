@@ -11,34 +11,34 @@ import com.immomo.matrix.Serializer;
  * @since Nov 28, 2012
  * 
  */
-public class SerializerFactory {
+public class MatrixSerializerFactory {
 
     private static Map<String, Serializer> serializers = new HashMap<String, Serializer>();
 
     static {
-        SerializerFactory.registerSerializer("HESSIAN", new HessianSerializer());
-        SerializerFactory.registerSerializer("JAVA", new HessianSerializer());
+        MatrixSerializerFactory.registerSerializer("HESSIAN", new HessianSerializer());
+        MatrixSerializerFactory.registerSerializer("JAVA", new HessianSerializer());
     }
 
     /**
      * Get a serializer.
      */
     public static Serializer getSerializer(String type) {
-        return SerializerFactory.serializers.get(type.toUpperCase());
+        return MatrixSerializerFactory.serializers.get(type.toUpperCase());
     }
 
     /**
      * Get all supported serializer types.
      */
     public static Collection<String> getSupportedSerizlier() {
-        return SerializerFactory.serializers.keySet();
+        return MatrixSerializerFactory.serializers.keySet();
     }
 
     /**
      * Register a custom serializer.
      */
     public static void registerSerializer(String type, Serializer serializer) {
-        SerializerFactory.serializers.put(type, serializer);
+        MatrixSerializerFactory.serializers.put(type, serializer);
     }
 
 }
