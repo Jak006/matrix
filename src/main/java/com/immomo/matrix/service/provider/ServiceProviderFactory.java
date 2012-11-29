@@ -1,4 +1,4 @@
-package com.immomo.matrix.service;
+package com.immomo.matrix.service.provider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Map;
 import com.immomo.matrix.Constants;
 import com.immomo.matrix.datastore.DataStoreService;
 import com.immomo.matrix.datastore.ThreadNotSafeDataStoreComponent;
+import com.immomo.matrix.service.ServiceMetadata;
 
 /**
  * 管理所有的服务元数据、服务实例。

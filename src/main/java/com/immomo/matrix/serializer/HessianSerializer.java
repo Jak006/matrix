@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 
 import com.caucho.hessian.io.Hessian2Input;
 import com.caucho.hessian.io.Hessian2Output;
-import com.immomo.matrix.Serializer;
 
 /**
  * @author mixueqiang

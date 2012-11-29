@@ -1,10 +1,12 @@
-package com.immomo.matrix.service;
+package com.immomo.matrix.service.provider.factory;
 
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.immomo.matrix.service.provider.ServiceInstance;
+import com.immomo.matrix.service.provider.ServiceProviderFactory;
 import com.immomo.matrix.util.ClassLoaderUtils;
 
 /**

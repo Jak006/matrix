@@ -7,7 +7,7 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseDecoder;
 
 import com.immomo.matrix.Response;
-import com.immomo.matrix.serializer.MatrixSerializerFactory;
+import com.immomo.matrix.serializer.factory.MatrixSerializerFactory;
 
 /**
  * @author mixueqiang

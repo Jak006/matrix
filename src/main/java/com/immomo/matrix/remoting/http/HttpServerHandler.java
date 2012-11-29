@@ -9,9 +9,9 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 import com.immomo.matrix.Request;
 import com.immomo.matrix.Response;
 import com.immomo.matrix.remoting.tcp.TcpServerHandler;
-import com.immomo.matrix.service.PropertyBasedServiceProviderFactory;
-import com.immomo.matrix.service.ServiceInstance;
-import com.immomo.matrix.service.ServiceProviderFactory;
+import com.immomo.matrix.service.provider.ServiceInstance;
+import com.immomo.matrix.service.provider.ServiceProviderFactory;
+import com.immomo.matrix.service.provider.factory.PropertyBasedServiceProviderFactory;
 import com.immomo.matrix.util.ErrorResponseUtils;
 
 /**

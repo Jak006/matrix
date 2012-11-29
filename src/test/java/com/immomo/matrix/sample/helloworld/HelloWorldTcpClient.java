@@ -1,7 +1,7 @@
 package com.immomo.matrix.sample.helloworld;
 
 import com.immomo.matrix.sample.helloworld.service.HelloWorldService;
-import com.immomo.matrix.service.ServiceConsumerFactory;
+import com.immomo.matrix.service.consumer.ServiceConsumerFactory;
 
 /**
  * @author mixueqiang

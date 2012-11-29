@@ -1,4 +1,4 @@
-package com.immomo.matrix.loadbalance;
+package com.immomo.matrix.route;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.apache.commons.lang.math.RandomUtils;
  * @since 2012-10-28
  * 
  */
-public class RandomStrategy implements LoadBalanceStrategy {
+public class RandomStrategy implements RouteStrategy {
 
     @Override
     public String getTargetURI(List<String> targetURIs) {

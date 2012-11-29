@@ -1,10 +1,11 @@
-package com.immomo.matrix.serializer;
+package com.immomo.matrix.serializer.factory;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.immomo.matrix.Serializer;
+import com.immomo.matrix.serializer.HessianSerializer;
+import com.immomo.matrix.serializer.Serializer;
 
 /**
  * @author mixueqiang
@@ -38,7 +39,7 @@ public class MatrixSerializerFactory {
      * Register a custom serializer.
      */
     public static void registerSerializer(String type, Serializer serializer) {
-        MatrixSerializerFactory.serializers.put(type, serializer);
+        MatrixSerializerFactory.serializers.put(type.toUpperCase(), serializer);
     }
 
 }

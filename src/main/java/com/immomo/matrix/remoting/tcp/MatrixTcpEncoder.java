@@ -8,7 +8,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
-import com.immomo.matrix.serializer.MatrixSerializerFactory;
+import com.immomo.matrix.serializer.factory.MatrixSerializerFactory;
 
 /**
  * @author mixueqiang

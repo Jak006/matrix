@@ -1,4 +1,4 @@
-package com.immomo.matrix.service;
+package com.immomo.matrix.service.provider;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

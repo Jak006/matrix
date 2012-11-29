@@ -10,13 +10,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.immomo.matrix.exception.URINotFoundException;
-import com.immomo.matrix.loadbalance.LoadBalanceStrategy;
-import com.immomo.matrix.service.ServiceInstance;
+import com.immomo.matrix.route.RouteStrategy;
+import com.immomo.matrix.service.provider.ServiceInstance;
 import com.immomo.matrix.util.ClassLoaderUtils;
 
 /**
- * {@link AddressingPool} stores all configured application addresses in this
- * application. You can specify a {@link LoadBalanceStrategy} for the service
+ * {@link AddressingComponent} stores all configured application addresses in
+ * this application. You can specify a {@link RouteStrategy} for the service
  * addressing at runtime.
  * <p>
  * TODO: address black list and so on.
@@ -25,13 +25,13 @@ import com.immomo.matrix.util.ClassLoaderUtils;
  * @since 2012-10-28
  * 
  */
-public class AddressingPool implements AddressingService {
+public class AddressingComponent implements AddressingService {
     private static final Log LOG = LogFactory.getLog(ServiceInstance.class);
 
     private Map<String, List<String>> serverURIs = new HashMap<String, List<String>>();
-    private LoadBalanceStrategy loadBalanceStrategy;
+    private RouteStrategy loadBalanceStrategy;
 
-    public AddressingPool(String propertyFile, LoadBalanceStrategy loadBalanceStrategy) {
+    public AddressingComponent(String propertyFile, RouteStrategy loadBalanceStrategy) {
         this.loadBalanceStrategy = loadBalanceStrategy;
         try {
             Properties properties = new Properties();

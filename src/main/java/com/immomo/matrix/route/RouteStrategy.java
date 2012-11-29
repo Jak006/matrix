@@ -1,4 +1,4 @@
-package com.immomo.matrix.loadbalance;
+package com.immomo.matrix.route;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  * @since 2012-10-28
  * 
  */
-public interface LoadBalanceStrategy {
+public interface RouteStrategy {
 
     String getTargetURI(List<String> targetURIs);
 

@@ -1,4 +1,4 @@
-package com.immomo.matrix.service;
+package com.immomo.matrix.service.consumer;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -6,13 +6,13 @@ import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.immomo.matrix.addressing.AddressingPool;
+import com.immomo.matrix.addressing.AddressingComponent;
 import com.immomo.matrix.addressing.AddressingService;
 import com.immomo.matrix.exception.URINotFoundException;
-import com.immomo.matrix.loadbalance.LoadBalanceStrategy;
-import com.immomo.matrix.loadbalance.RandomStrategy;
 import com.immomo.matrix.remoting.MatrixClient;
 import com.immomo.matrix.remoting.MatrixClientFactory;
+import com.immomo.matrix.route.RouteStrategy;
+import com.immomo.matrix.route.RandomStrategy;
 
 /**
  * @author mixueqiang
@@ -31,8 +31,8 @@ public class ServiceConsumerFactory {
         this(propertyFile, new RandomStrategy());
     }
 
-    public ServiceConsumerFactory(String propertyFile, LoadBalanceStrategy loadBalanceStrategy) {
-        addressingPool = new AddressingPool(propertyFile, loadBalanceStrategy);
+    public ServiceConsumerFactory(String propertyFile, RouteStrategy loadBalanceStrategy) {
+        addressingPool = new AddressingComponent(propertyFile, loadBalanceStrategy);
     }
 
     public void destroy() {
