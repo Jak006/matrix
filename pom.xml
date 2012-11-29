@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.immomo</groupId>
   <artifactId>matrix</artifactId>
-  <version>0.3.0-SNAPSHHOT</version>
+  <version>0.3.0</version>
   <name>MOMO :: Matrix</name>
   <description>Service matrix cluster providing transparent service discovery and load balance.</description>
 
