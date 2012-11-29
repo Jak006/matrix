@@ -2,6 +2,7 @@ package com.immomo.matrix.remoting.tcp;
 
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
+import java.net.URI;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
@@ -17,7 +18,6 @@ import com.immomo.matrix.exception.InvalidTargetURIException;
 import com.immomo.matrix.exception.MatrixException;
 import com.immomo.matrix.remoting.AbstractMatrixClient;
 import com.immomo.matrix.remoting.MatrixChannelStatus;
-import com.immomo.matrix.remoting.MatrixClient;
 import com.immomo.matrix.util.NamedThreadFactory;
 import com.immomo.matrix.util.RequestBuilder;
 
@@ -26,22 +26,22 @@ import com.immomo.matrix.util.RequestBuilder;
  * @since 2012-10-18
  * 
  */
-public class NettyClient extends AbstractMatrixClient implements MatrixClient {
+public class MatrixTcpClient extends AbstractMatrixClient {
 
     private static final ChannelFactory channelFactory = new NioClientSocketChannelFactory(
-            Executors.newCachedThreadPool(new NamedThreadFactory("MatrixNettyChannelBoss", true)),
-            Executors.newCachedThreadPool(new NamedThreadFactory("MatrixNettyChannelWorker", true)));
+            Executors.newCachedThreadPool(new NamedThreadFactory("MatrixTCPChannelBoss", true)),
+            Executors.newCachedThreadPool(new NamedThreadFactory("MatrixTCPChannelWorker", true)));
 
     private ClientBootstrap bootstrap;
     private volatile Channel channel;
 
-    public NettyClient(String targetURI) throws InvalidTargetURIException {
+    public MatrixTcpClient(URI targetURI) throws InvalidTargetURIException {
         super(targetURI);
 
         bootstrap = new ClientBootstrap(channelFactory);
         bootstrap.setOption("keepAlive", true);
         bootstrap.setOption("tcpNoDelay", true);
-        bootstrap.setPipelineFactory(new NettyClientPipelineFactory());
+        bootstrap.setPipelineFactory(new TcpClientPipelineFactory());
 
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(getHost(), getPort()));
         channel = future.getChannel();
@@ -55,8 +55,9 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
         Response response = responseFuture.get();
 
         if (response.isError()) {
-
+            // TODO
         }
+
         return response.getPayload();
     }
 
@@ -72,5 +73,7 @@ public class NettyClient extends AbstractMatrixClient implements MatrixClient {
     @Override
     public void destroy() {
         channel.close();
+        bootstrap.releaseExternalResources();
     }
+
 }

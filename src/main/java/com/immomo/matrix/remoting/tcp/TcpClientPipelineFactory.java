@@ -9,14 +9,16 @@ import org.jboss.netty.channel.Channels;
  * @since 2012-10-31
  * 
  */
-public class NettyClientPipelineFactory implements ChannelPipelineFactory {
+public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
     @Override
     public ChannelPipeline getPipeline() {
         ChannelPipeline pipeline = Channels.pipeline();
-        pipeline.addLast("encode", new NettyEncoder());
-        pipeline.addLast("decode", new NettyDecoder());
-        pipeline.addLast("handler", new NettyClientHandler());
+        pipeline.addLast("encode", new MatrixTcpEncoder());
+        pipeline.addLast("decode", new MatrixTcpDecoder());
+        pipeline.addLast("handler", new TcpClientHandler());
+
         return pipeline;
     }
+
 }

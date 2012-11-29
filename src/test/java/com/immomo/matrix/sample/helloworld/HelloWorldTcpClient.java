@@ -8,10 +8,9 @@ import com.immomo.matrix.service.ServiceConsumerFactory;
  * @since 2012-10-20
  * 
  */
-public class HelloWorldClient {
+public class HelloWorldTcpClient {
 
-    private static ServiceConsumerFactory serviceConsumerFactory = new ServiceConsumerFactory(
-            "matrix_client.properties");
+    private static ServiceConsumerFactory serviceConsumerFactory = new ServiceConsumerFactory("tcp_client.properties");
 
     public static void main(String[] args) throws Exception {
         HelloWorldService helloWorldService = (HelloWorldService) serviceConsumerFactory.getInstance(

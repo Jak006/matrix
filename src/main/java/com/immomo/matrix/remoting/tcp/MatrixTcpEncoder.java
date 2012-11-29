@@ -15,7 +15,7 @@ import com.immomo.matrix.serializer.MatrixSerializerFactory;
  * @since 2012-11-29
  * 
  */
-public class NettyEncoder extends OneToOneEncoder {
+public class MatrixTcpEncoder extends OneToOneEncoder {
 
     @Override
     protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {

@@ -1,10 +1,13 @@
 package com.immomo.matrix.remoting;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.immomo.matrix.exception.InvalidTargetURIException;
-import com.immomo.matrix.remoting.tcp.NettyClient;
+import com.immomo.matrix.remoting.http.MatrixHttpClient;
+import com.immomo.matrix.remoting.tcp.MatrixTcpClient;
 
 /**
  * @author mixueqiang
@@ -37,9 +40,19 @@ public class MatrixClientFactory {
         }
 
         try {
-            MatrixClient client = new NettyClient(requestURI);
+            URI targetURI = new URI(requestURI);
+
+            MatrixClient client = null;
+            if ("http".equals(targetURI.getScheme())) {
+                client = new MatrixHttpClient(targetURI);
+            } else {
+                client = new MatrixTcpClient(targetURI);
+            }
+
             clients.putIfAbsent(requestURI, client);
 
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         } catch (InvalidTargetURIException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,6 @@
 package com.immomo.matrix.remoting;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import com.immomo.matrix.exception.InvalidTargetURIException;
 import com.immomo.matrix.util.URIUtils;
@@ -13,16 +12,11 @@ import com.immomo.matrix.util.URIUtils;
  */
 public abstract class AbstractMatrixClient implements MatrixClient {
 
-    protected MatrixChannelStatus status;
     protected URI targetURI;
+    protected MatrixChannelStatus status;
 
-    public AbstractMatrixClient(String targetURI) throws InvalidTargetURIException {
-        try {
-            this.targetURI = new URI(targetURI);
-        } catch (URISyntaxException e) {
-            // The connection URI is invalid.
-            throw new InvalidTargetURIException(targetURI);
-        }
+    public AbstractMatrixClient(URI targetURI) throws InvalidTargetURIException {
+        this.targetURI = targetURI;
     }
 
     public String getHost() {

@@ -11,11 +11,11 @@ public interface MatrixServer {
     /**
      * Start the server.
      */
-    void startServer();
+    void start();
 
     /**
      * Stop the server.
      */
-    void stopServer();
+    void stop();
 
 }

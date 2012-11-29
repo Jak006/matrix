@@ -12,9 +12,9 @@ import com.immomo.matrix.serializer.MatrixSerializerFactory;
  * @since 2012-11-29
  * 
  */
-public class NettyDecoder extends LengthFieldBasedFrameDecoder {
+public class MatrixTcpDecoder extends LengthFieldBasedFrameDecoder {
 
-    public NettyDecoder() {
+    public MatrixTcpDecoder() {
         super(Integer.MAX_VALUE, 0, 4, 0, 4);
     }
 
